@@ -26,13 +26,13 @@ const SideBar = () => {
         </div>
         <div className="flex items-center gap-4 cursor-pointer p-2">
           <FaLaptopCode size={20} color="#2e2ebf" />
-          <Link href={"/dashboard"} className="font-bold">
+          <Link href={"/projects"} className="font-bold">
             Projects
           </Link>
         </div>
         <div className="flex items-center gap-4 cursor-pointer p-2">
           <ImMenu size={20} color="#2e2ebf" />
-          <Link href={"/dashboard"} className="font-bold">
+          <Link href={"/categories"} className="font-bold">
             Categories
           </Link>
         </div>
