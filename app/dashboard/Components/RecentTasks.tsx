@@ -25,7 +25,7 @@ const RecentTasks = () => {
                 className={`bg-gray-200 p-6 rounded-xl shadow-lg mt-5 w-[63pc] flex justify-between items-center`}
               >
                 <div className="flex w-full items-center justify-between gap-10">
-                  <h1 className="text-lg font-bold">{el.Title}</h1>
+                  <h1 className="text-lg font-bold w-10">{el.Title}</h1>
                   <div className="flex flex-col items-center">
                     <h1 className="text-black text-lg font-bold">Status</h1>
                     <p className="text-[#2e2ebf] text-md">{el.completed}</p>

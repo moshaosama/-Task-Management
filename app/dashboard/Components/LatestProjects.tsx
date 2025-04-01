@@ -1,16 +1,23 @@
 "use client";
 
 import Button from "@/app/components/Button";
+import AddNewProjects from "@/app/projects/Components/AddNewProjects";
 import useFastDispatch from "@/Hooks/useFastDispatch";
 import { fetchGetAllProjects } from "@/Store/Reducer/ProjectSlice/getProjectSlice";
 import { RootState } from "@/Store/Store";
 import Link from "next/link";
+import { useState } from "react";
 import { AiFillDatabase } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
 const LatestProjects = () => {
   const Projects = useSelector((state: RootState) => state.Projects);
   useFastDispatch(fetchGetAllProjects());
+  const [AddProject, setAddProject] = useState(false);
+
+  const toggleAddProject = () => {
+    setAddProject((prev) => !prev);
+  };
 
   console.log(Projects);
 
@@ -18,7 +25,7 @@ const LatestProjects = () => {
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-bold">Latest Project</h1>
-        <Button Func={() => {}} />
+        <Button Func={toggleAddProject} />
       </div>
       <div className="overflow-y-scroll h-[30pc]">
         {Projects?.data?.map(
@@ -61,6 +68,7 @@ const LatestProjects = () => {
           }
         )}
       </div>
+      <AddNewProjects Active={AddProject} setActive={toggleAddProject} />
     </>
   );
 };
