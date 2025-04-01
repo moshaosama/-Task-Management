@@ -1,10 +1,12 @@
 "use client";
 
+import useFastDispatch from "@/Hooks/useFastDispatch";
+import { fetchGetAllCategories } from "@/Store/Reducer/Categories/getAllCategories";
 import { FetchcreateProject } from "@/Store/Reducer/ProjectSlice/createProjectSlice";
-import { AppDispatch } from "@/Store/Store";
+import { AppDispatch, RootState } from "@/Store/Store";
 import React, { memo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddNewProjects = memo(
   ({ Active, setActive }: { Active: boolean; setActive: () => void }) => {
@@ -13,12 +15,19 @@ const AddNewProjects = memo(
       handleSubmit,
       formState: { errors, isSubmitting },
     } = useForm();
+    const [selectedCategory, setSelectedCategory] = useState("");
+
+    const Categories = useSelector((state: RootState) => state.Categories);
+
+    useFastDispatch(fetchGetAllCategories());
 
     const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (data: any) => {
-      dispatch(FetchcreateProject(data));
+      dispatch(FetchcreateProject({ ...data, categoryID: selectedCategory }));
+      // console.log({ ...data, categoryID: selectedCategory });
     };
+
     return (
       <>
         {Active ? (
@@ -50,7 +59,7 @@ const AddNewProjects = memo(
                     {...register("title", { required: "Title is Required" })}
                   />
                   <span className="text-red-500 font-semibold">
-                    {errors.name?.message && (errors.name?.message as string)}
+                    {errors.title?.message && (errors.title?.message as string)}
                   </span>
                 </p>
                 <p className="flex flex-col">
@@ -68,6 +77,32 @@ const AddNewProjects = memo(
                   <span className="text-red-500 font-semibold">
                     {errors.description?.message &&
                       (errors.description?.message as string)}
+                  </span>
+                </p>
+
+                <p className="flex flex-col">
+                  <label htmlFor="name" className="text-gray-500">
+                    Categories
+                  </label>
+                  {/* /////////// Categories Render ////////////*/}
+                  <select
+                    className="p-3 border-[#ddd] border-[2px] rounded-lg"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">اختر تصنيفًا</option>
+                    {Categories?.data?.map(
+                      (el: { Title: string; _id: string }) => (
+                        <option key={el._id} value={el?._id}>
+                          {el.Title}
+                        </option>
+                      )
+                    )}
+                  </select>
+                  {/* ///////////////// */}
+                  <span className="text-red-500 font-semibold">
+                    {errors.Categories?.message &&
+                      (errors.Categories?.message as string)}
                   </span>
                 </p>
 
