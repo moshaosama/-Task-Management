@@ -1,49 +1,49 @@
-"use client";
-import useFastDispatch from "@/Hooks/useFastDispatch";
-import { fetchGetAllTasks } from "@/Store/Reducer/Tasks/getTasksSlice";
-import { RootState } from "@/Store/Store";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux"; // Importing to access Redux store state
+import { RootState } from "@/Store/Store"; // Root state type for the Redux store
 
 const RecentTasks = () => {
+  // Accessing the 'AllTasks' slice from the Redux store using useSelector
   const allTasks = useSelector((state: RootState) => state.AllTasks);
-  useFastDispatch(fetchGetAllTasks());
+
+  // You can add a loading state here to show a loading spinner or message while the tasks are being fetched.
+  // Example: if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="mt-20">
-      <h1 className="text-3xl font-bold">Recent Tasks</h1>
-      <div className="overflow-y-scroll h-[34pc] max-sm:h-72">
-        {allTasks?.data?.map(
-          (el: {
-            Title: string;
-            _id: string;
-            completed: string;
-            Date: string;
-          }) => {
-            return (
-              <div
-                key={el._id}
-                className={`bg-gray-200 p-6 rounded-xl shadow-lg mt-5 w-[63pc] max-sm:w-[21pc] max-md:w-[21pc] max-lg:w-[21pc] flex justify-between items-center`}
-              >
-                <div className="flex w-full items-center justify-between gap-10">
-                  <h1 className="text-lg font-bold w-10">{el.Title}</h1>
-                  <div className="flex flex-col items-center">
-                    <h1 className="text-black text-lg font-bold">Status</h1>
-                    <p className="text-[#2e2ebf] text-md">{el.completed}</p>
-                  </div>
-                  <div className="flex flex-col items-center max-sm:hidden max-lg:hidden max-md:hidden">
-                    <h1 className="text-black text-lg font-bold">Created at</h1>
-                    <p className="text-[#2e2ebf] text-md">{el.Date}</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <h1 className="text-black text-lg font-bold">Created at</h1>
-                    <p className="text-[#2e2ebf] text-md">{el.Date}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          }
-        )}
-      </div>
+    <div className="w-full h-auto flex flex-wrap gap-5 justify-center max-sm:justify-start">
+      {/* Loop through all tasks and render them */}
+      {allTasks?.data?.map(
+        (el: {
+          title: string;
+          completed: string;
+          date: string;
+          _id: string;
+        }) => (
+          <div
+            className="bg-gray-200 p-6 rounded-xl w-[24pc] max-sm:w-[21pc] flex flex-col justify-between"
+            key={el._id} // Ensure that each task has a unique key for efficient rendering
+          >
+            {/* Displaying task title */}
+            <h1 className="text-lg font-semibold">{el.title}</h1>
+
+            {/* Displaying the status of the task */}
+            <div
+              className={`text-sm ${
+                el.completed === "Completed"
+                  ? "text-green-500"
+                  : "text-yellow-500"
+              }`}
+            >
+              {el.completed}
+            </div>
+
+            {/* Displaying the creation date of the task */}
+            <p className="text-xs text-gray-500">
+              {new Date(el.date).toLocaleDateString()}
+            </p>
+          </div>
+        )
+      )}
     </div>
   );
 };
