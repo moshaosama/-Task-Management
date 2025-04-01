@@ -25,9 +25,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .active {
   background-color: #2e2ebf;
-
   padding: 10px;
   border-radius: 10px;
   gap: 17px;
