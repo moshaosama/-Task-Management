@@ -13,7 +13,7 @@ const CategoriesRender = () => {
         (el: { Title: string; projects: string[]; _id: string }) => {
           return (
             <div
-              className="bg-gray-200 p-5 w-[63pc] mt-3 rounded-xl"
+              className="bg-gray-200 p-5 w-[63pc] max-sm:w-[21pc] max-md:[21pc] max-lg:w-[21pc] mt-3 rounded-xl"
               key={el?._id}
             >
               <h1 className="text-xl font-bold hover:text-[#2e2ebf] cursor-pointer">

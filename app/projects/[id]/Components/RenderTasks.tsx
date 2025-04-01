@@ -31,7 +31,7 @@ const RenderTasks = () => {
             return (
               <div
                 key={task._id}
-                className={`bg-gray-200 p-6 rounded-xl shadow-lg mt-5 w-[60pc] flex justify-between items-center ${
+                className={`bg-gray-200 p-6 rounded-xl shadow-lg mt-5 w-[60pc] max-sm:w-[21pc] max-lg:w-[21pc] max-md:w-[21pc] flex justify-between items-center ${
                   checkedTasks[task._id] || task.completed === "completed"
                     ? "opacity-70"
                     : "opacity-100"
@@ -45,6 +45,7 @@ const RenderTasks = () => {
                       task.completed === "completed" ||
                       false
                     }
+                    className="cursor-pointer"
                     onChange={() => handleCheckboxChange(task._id)}
                   />
                   <h1

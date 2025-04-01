@@ -23,11 +23,11 @@ const LatestProjects = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center max-sm:w-[17pc] max-sm:items-start">
         <h1 className="text-lg font-bold">Latest Project</h1>
         <Button Func={toggleAddProject} />
       </div>
-      <div className="overflow-y-scroll h-[30pc]">
+      <div className="overflow-y-scroll h-[30pc] max-sm:h-72 max-md:h-72 max-lg:h-72">
         {Projects?.data?.map(
           (el: {
             title: string;
@@ -37,7 +37,7 @@ const LatestProjects = () => {
           }) => {
             return (
               <div
-                className="bg-[#eee] p-3 rounded-xl w-96 flex mt-5 flex-col  relative"
+                className="bg-[#eee] p-3 rounded-xl w-96 max-sm:w-[16pc] flex mt-5 flex-col  relative"
                 key={el._id}
               >
                 <div className="flex justify-between items-center">

@@ -31,8 +31,8 @@ const AddNewProjects = memo(
     return (
       <>
         {Active ? (
-          <div className="z-50 flex justify-center items-center h-[100vh] bg-[#0101018f] absolute top-0 -left-5  w-[103.97pc]">
-            <div className="bg-white p-3 rounded-xl w-[40pc] ">
+          <div className="z-50 flex justify-center items-center h-[100vh] max-sm:w-[24.5pc] max-md:w-[24.5pc] max-lg:w-[24.5pc] bg-[#0101018f] absolute top-0 -left-5  w-[103.97pc]">
+            <div className="bg-white p-3 rounded-xl w-[40pc] max-sm:w-[21pc] max-md:w-[21pc] max-lg:w-[21pc] ">
               <div className="flex justify-between">
                 <h1 className="text-[#2e2ebf] text-xl font-bold">
                   Add a new project
@@ -90,7 +90,6 @@ const AddNewProjects = memo(
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   >
-                    <option value="">اختر تصنيفًا</option>
                     {Categories?.data?.map(
                       (el: { Title: string; _id: string }) => (
                         <option key={el._id} value={el?._id}>

@@ -6,16 +6,20 @@ import {
   getTasksReducer,
   getAllTasksReducer,
 } from "./Reducer/Tasks/getTasksSlice";
-import createTasksSlice from "./Reducer/Tasks/createTaskSlice";
+import createTasksReducer from "./Reducer/Tasks/createTaskSlice";
+import getCategoriesReducer from "./Reducer/Categories/getAllCategories";
+import loginReducer from "./Reducer/Login/LoginSlice";
 
 export const Store = configureStore({
   reducer: {
     createProject: createProjectReducer,
     Projects: getProjectsReducer,
     projectById: getProjectByIdReducer,
-    createTasks: createTasksSlice,
+    createTasks: createTasksReducer,
     Tasks: getTasksReducer,
     AllTasks: getAllTasksReducer,
+    Categories: getCategoriesReducer,
+    Login: loginReducer,
   },
 });
 

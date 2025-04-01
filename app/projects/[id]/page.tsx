@@ -38,14 +38,14 @@ const TasksPage = () => {
 
   return (
     <>
-      <div className="bg-[#2e2ebf] flex justify-between items-center absolute top-0 -left-5 w-[103.8rem] h-40 p-10">
+      <div className="bg-[#2e2ebf] flex justify-between items-center absolute top-0 -left-5 w-[103.8rem] max-sm:w-[24.5pc] max-lg:w-[24.5pc] max-md:w-[24.5pc] h-40 p-10">
         <div className="text-white">
           <h1 className="text-2xl font-bold">
             {(projectById?.data && projectById?.data?.title) || "Loading..."}
           </h1>
           <p className="text-sm">{tasks?.data?.length} Tasks</p>
         </div>
-        <div className="mr-40 font-bold flex flex-col items-center text-white text-2xl">
+        <div className="mr-40 max-sm:mr-0 max-md:mr-0 max-lg:mr-0 font-bold flex flex-col items-center text-white text-2xl">
           <h1>0%</h1>
           <p className="text-sm">Completed</p>
         </div>

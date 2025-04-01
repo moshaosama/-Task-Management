@@ -35,7 +35,7 @@ const ProjectsRender = () => {
       {Products.data.length > 0 ? (
         Products?.data?.map((el: ProductType) => (
           <div
-            className="bg-[#eee] p-3 rounded-xl w-96 flex mt-10 flex-col gap-x-10 relative"
+            className="bg-[#eee] p-3 rounded-xl w-96 max-sm:w-[21pc] flex mt-10 flex-col gap-x-10 relative"
             key={el._id}
           >
             <div className="flex justify-between items-center">

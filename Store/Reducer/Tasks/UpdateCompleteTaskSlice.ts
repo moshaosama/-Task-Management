@@ -8,20 +8,32 @@ const initialState = {
 
 export const fetchUpdateCompleteTask = createAsyncThunk(
   "updateComplete/fetchUpdateCompleteTask",
-  async (id: string) => {
-    const response = await fetch("http://localhost:3000/tasks/update_task", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
-      }),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to create Task");
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+      const accessToken = user?.access_token;
+
+      if (!accessToken) {
+        return rejectWithValue("Unauthorized: No access token provided");
+      }
+
+      const response = await fetch("http://localhost:3000/tasks/update_task", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update Task");
+      }
+
+      return await response.json();
+    } catch (error: any) {
+      return rejectWithValue(error.message || "An error occurred");
     }
-    return response.json();
   }
 );
 
@@ -41,7 +53,7 @@ const updateCompleteTask = createSlice({
     });
     builder.addCase(fetchUpdateCompleteTask.rejected, (state, action) => {
       state.loading = false;
-      state.error = (action.payload as string) || "An error occurred";
+      state.error = action.payload as string;
     });
   },
 });
