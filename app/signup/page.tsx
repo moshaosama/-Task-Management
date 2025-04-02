@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const SignUp = () => {
   const {
@@ -32,8 +33,13 @@ const SignUp = () => {
   return (
     <div className="w-[118pc] max-sm:w-[21pc] h-[50pc] max-sm:h-[40pc] flex flex-col gap-10 justify-center items-center">
       <div className="bg-gray-100 p-6 w-96 max-sm:w-80 shadow-xl rounded-lg">
-        <div>
+        <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Create new account</h1>
+          <div>
+            <Link href={"/dashboard"}>
+              <FaLongArrowAltLeft size={20} className="cursor-pointer" />
+            </Link>
+          </div>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}

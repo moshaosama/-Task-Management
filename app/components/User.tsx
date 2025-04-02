@@ -10,7 +10,9 @@ const User = () => {
     <>
       <div className="flex items-center gap-5">
         {/* Display the user's name if the user is logged in, else display nothing */}
-        <span>{User ? `,${User.user.userName}` : ""}</span>
+        <span className="max-sm:text-xl">
+          {User ? `,${User.user.userName}` : ""}
+        </span>
         {User ? (
           <img
             src={User && User.user.Photo ? User.user.Photo : undefined}

@@ -29,7 +29,9 @@ const Projects = () => {
         <Button Func={toggleActive} />
       </div>
 
-      <div className="grid grid-cols-3 gap-5 my-10">{<ProjectsRender />}</div>
+      <div className="grid grid-cols-3 max-sm:grid-cols-1 max-md:grid-cols-1 max-lg:grid-cols-2 gap-5 max-sm:gap-2 max-md:gap-2 my-10">
+        {<ProjectsRender />}
+      </div>
 
       {AddNewFrom && (
         <AddNewProjects Active={AddNewFrom} setActive={toggleActive} />

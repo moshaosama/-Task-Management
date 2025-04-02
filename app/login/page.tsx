@@ -3,6 +3,7 @@ import { FetchLogin } from "@/Store/Reducer/Login/LoginSlice";
 import { AppDispatch } from "@/Store/Store";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
 const login = () => {
@@ -20,11 +21,18 @@ const login = () => {
   return (
     <div className="w-[118pc] h-[50pc] max-sm:w-[21pc] flex flex-col max-sm:h-[40pc] gap-10 justify-center items-center">
       <div className="bg-gray-100 p-6 w-96 max-sm:w-80 shadow-xl rounded-lg">
-        <div>
-          <h1 className="text-2xl font-bold">Sign in</h1>
-          <p className="text-sm text-gray-400">
-            Stay Updated on Your professional world
-          </p>
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Sign in</h1>
+            <p className="text-sm text-gray-400">
+              Stay Updated on Your professional world
+            </p>
+          </div>
+          <div>
+            <Link href={"/dashboard"}>
+              <FaLongArrowAltLeft size={20} className="cursor-pointer" />
+            </Link>
+          </div>
         </div>
 
         <form
