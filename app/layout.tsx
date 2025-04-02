@@ -14,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Ensure any client-specific behavior is handled inside useEffect or after hydration.
   return (
     <html lang="en">
       <body>
