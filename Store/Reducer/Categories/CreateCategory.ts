@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
-  data: {},
+  data: null,
   error: "",
 };
 
@@ -14,7 +14,7 @@ export const FetchcreateCategory = createAsyncThunk(
       const accessToken = user?.access_token;
 
       if (!accessToken) {
-        return rejectWithValue("Unauthorized: No access token provided");
+        return;
       }
 
       const response = await fetch("http://localhost:3000/categories", {
@@ -26,11 +26,13 @@ export const FetchcreateCategory = createAsyncThunk(
         body: JSON.stringify(data),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to create Category");
+        return rejectWithValue(result.message || "Failed to create Category");
       }
 
-      return await response.json();
+      return result;
     } catch (error: any) {
       return rejectWithValue(error.message || "An error occurred");
     }
@@ -42,20 +44,20 @@ const createCategorySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(FetchcreateCategory.pending, (state) => {
-      state.loading = true;
-      state.error = "";
-    });
-    builder.addCase(FetchcreateCategory.fulfilled, (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.error = "";
-      console.log("Category created successfully!");
-    });
-    builder.addCase(FetchcreateCategory.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });
+    builder
+      .addCase(FetchcreateCategory.pending, (state) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(FetchcreateCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+        state.error = "";
+      })
+      .addCase(FetchcreateCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

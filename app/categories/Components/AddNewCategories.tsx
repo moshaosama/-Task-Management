@@ -1,5 +1,6 @@
 "use client";
 
+import useNotify from "@/Hooks/useNotify";
 // Import necessary functions and libraries
 import { FetchcreateCategory } from "@/Store/Reducer/Categories/CreateCategory";
 import { AppDispatch } from "@/Store/Store";
@@ -7,10 +8,13 @@ import { useParams } from "next/navigation";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 // Define the AddNewCategories component with memoization to prevent unnecessary re-renders
 const AddNewCategories = memo(
   ({ Active, setActive }: { Active: boolean; setActive: () => void }) => {
+    const {notify} = useNotify();
+
     // Using useForm hook to handle form state and validation
     const {
       register,
@@ -26,6 +30,13 @@ const AddNewCategories = memo(
 
     // Define the onSubmit function to handle form submission
     const onSubmit = (data: any) => {
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+      const accessToken = user?.access_token;
+
+      if (!accessToken) {
+        notify("Please Login First");
+      }
+
       dispatch(FetchcreateCategory(data)); // Dispatch the action to create a category
     };
 
@@ -79,6 +90,7 @@ const AddNewCategories = memo(
             </div>
           </div>
         ) : null}
+        <ToastContainer />
       </>
     );
   }

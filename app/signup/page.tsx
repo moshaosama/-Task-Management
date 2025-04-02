@@ -5,6 +5,7 @@ import { AppDispatch } from "@/Store/Store";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 const SignUp = () => {
   const {
@@ -18,76 +19,129 @@ const SignUp = () => {
     dispatch(FetchSignUp(data));
   };
 
+  // Prevent client-only rendering issues by waiting for the component to mount
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Only render the component after it has mounted on the client
+  if (!isMounted) return null;
+
   return (
     <div className="w-[118pc] max-sm:w-[21pc] h-[50pc] max-sm:h-[40pc] flex flex-col gap-10 justify-center items-center">
-      <div className="bg-gray-100 p-3 w-96 max-sm:w-80 shadow-xl rounded-lg">
+      <div className="bg-gray-100 p-6 w-96 max-sm:w-80 shadow-xl rounded-lg">
         <div>
           <h1 className="text-2xl font-bold">Create new account</h1>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 mt-5"
+          className="flex flex-col gap-6 mt-5"
         >
-          <p className="flex flex-col">
-            <label htmlFor="email" className="text-gray-500">
+          {/* Email field */}
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-gray-500 font-semibold">
               Email
             </label>
             <input
               id="email"
               type="text"
               {...register("email", {
-                required: "email is Required",
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, // Email pattern
+                  message: "Please enter a valid email address",
+                },
               })}
-              className="p-2 border-[#ddd] border-[2px] rounded-lg"
+              className={`p-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2e2ebf] transition-colors ${
+                errors.email ? "border-red-500" : "border-[#ddd]"
+              }`}
             />
-            <span className="text-red-500 font-semibold">
-              {errors.email?.message && (errors.email?.message as string)}
-            </span>
-          </p>
-          <p className="flex flex-col">
-            <label htmlFor="password" className="text-gray-500">
+            {errors.email && (
+              <span className="text-red-500 font-semibold mt-1">
+                {errors.email.message as string}
+              </span>
+            )}
+          </div>
+
+          {/* Password field */}
+          <div className="flex flex-col">
+            <label htmlFor="password" className="text-gray-500 font-semibold">
               Password
             </label>
             <input
               id="password"
-              type="text"
+              type="password"
               {...register("password", {
-                required: "password is Required",
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
               })}
-              className="p-2 border-[#ddd] border-[2px] rounded-lg"
+              className={`p-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2e2ebf] transition-colors ${
+                errors.password ? "border-red-500" : "border-[#ddd]"
+              }`}
             />
-            <span className="text-red-500 font-semibold">
-              {errors.password?.message && (errors.password?.message as string)}
-            </span>
-          </p>
-          <p className="flex flex-col">
-            <label htmlFor="linkedinUrl" className="text-gray-500">
-              Linkedin Profile
+            {errors.password && (
+              <span className="text-red-500 font-semibold mt-1">
+                {errors.password.message as string}
+              </span>
+            )}
+          </div>
+
+          {/* LinkedIn Profile field */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="linkedinUrl"
+              className="text-gray-500 font-semibold"
+            >
+              LinkedIn Profile
             </label>
             <input
               id="linkedinUrl"
               type="text"
               {...register("linkedinUrl", {
-                required: "linkedinUrl is Required",
+                required: "LinkedIn URL is required",
+                pattern: {
+                  value:
+                    /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+$/, // LinkedIn URL pattern
+                  message: "Please enter a valid LinkedIn profile URL",
+                },
               })}
-              className="p-2 border-[#ddd] border-[2px] rounded-lg"
+              className={`p-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2e2ebf] transition-colors ${
+                errors.linkedinUrl ? "border-red-500" : "border-[#ddd]"
+              }`}
             />
-            <span className="text-red-500 font-semibold">
-              {errors.linkedinUrl?.message &&
-                (errors.linkedinUrl?.message as string)}
-            </span>
-          </p>
+            {errors.linkedinUrl && (
+              <span className="text-red-500 font-semibold mt-1">
+                {errors.linkedinUrl.message as string}
+              </span>
+            )}
+          </div>
 
-          <button className="bg-[#2e2ebf] p-3 rounded-xl text-white font-bold text-lg">
-            Login
+          {/* Submit button */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`bg-[#2e2ebf] p-3 rounded-xl text-white font-bold text-lg ${
+              isSubmitting
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-[#1d1dbf]"
+            }`}
+          >
+            {isSubmitting ? "Submitting..." : "Sign Up"}
           </button>
         </form>
       </div>
+
+      {/* SignIn link */}
       <p>
-        Already have an account?
-        <Link href={"/login"}>
+        Already have an account?{" "}
+        <Link href="/login">
           <span className="text-[#2e2ebf] hover:underline cursor-pointer">
-            {"  "}Signin
+            Sign In
           </span>
         </Link>
       </p>

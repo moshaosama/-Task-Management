@@ -12,7 +12,7 @@ const DashBoard = () => {
         {/* User greeting section */}
         <div>
           <h1 className="flex gap-1 text-3xl">
-            <span className="font-bold flex">
+            <span className="font-bold flex items-center">
               Hello <User />{" "}
               {/* Displaying the user’s name dynamically using the User component */}
             </span>
@@ -23,7 +23,7 @@ const DashBoard = () => {
         <DashBoardDetails />{" "}
         {/* Displays dashboard stats like total projects, tasks, and categories */}
         {/* Recent tasks */}
-        <RecentTasks />{" "}
+        <RecentTasks />
         {/* Displays a list of recent tasks, showing task progress */}
       </div>
       {/* Overall progress */}

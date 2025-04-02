@@ -1,5 +1,6 @@
 "use client";
 
+import useNotify from "@/Hooks/useNotify";
 import { FetchcreateProject } from "@/Store/Reducer/ProjectSlice/createProjectSlice";
 import { fetchCreateTask } from "@/Store/Reducer/Tasks/createTaskSlice";
 import { AppDispatch } from "@/Store/Store";
@@ -7,6 +8,7 @@ import { useParams } from "next/navigation";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 const AddNewTasks = memo(
   ({ Active, setActive }: { Active: boolean; setActive: () => void }) => {
@@ -16,10 +18,17 @@ const AddNewTasks = memo(
       formState: { errors, isSubmitting },
     } = useForm();
     const { id } = useParams();
+    const { notify } = useNotify();
 
     const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (data: any) => {
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+      const accessToken = user?.access_token;
+
+      if (!accessToken) {
+        notify("Please Login First");
+      }
       dispatch(fetchCreateTask({ ...data, projectID: id }));
     };
     return (
@@ -66,6 +75,7 @@ const AddNewTasks = memo(
             </div>
           </div>
         ) : null}
+        <ToastContainer />
       </>
     );
   }

@@ -8,9 +8,14 @@ const User = () => {
 
   return (
     <>
-      <div>
+      <div className="flex items-center gap-5">
         {/* Display the user's name if the user is logged in, else display nothing */}
         <span>{User ? `,${User.user.userName}` : ""}</span>
+        <img
+          src={User && User.user.Photo ? User.user.Photo : undefined}
+          alt="profilePhoto"
+          className="w-16 rounded-full object-cover"
+        />
       </div>
     </>
   );

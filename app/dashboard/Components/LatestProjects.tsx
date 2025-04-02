@@ -1,8 +1,7 @@
 "use client"; // 👈 This line ensures the component is rendered on the client side, which is important for hooks like useState and useDispatch
 
 import Button from "@/app/components/Button"; // Importing the Button component
-import AddNewProjects from "@/app/projects/Components/AddNewProjects";
-// Importing the AddNewProjects component
+import AddNewProjects from "@/app/projects/Components/AddNewProjects"; // Importing the AddNewProjects component
 import useFastDispatch from "@/Hooks/useFastDispatch"; // Importing custom hook to dispatch actions
 import { fetchGetAllProjects } from "@/Store/Reducer/ProjectSlice/getProjectSlice"; // Importing the action to fetch all projects from the store
 import { RootState } from "@/Store/Store"; // Importing RootState type for type safety when accessing the Redux store
@@ -40,50 +39,54 @@ const LatestProjects = () => {
       {/* Section to display a scrollable list of projects */}
       <div className="overflow-y-scroll h-[30pc] max-sm:h-72 max-md:h-72 max-lg:h-72">
         {/* Mapping through the projects and displaying them */}
-        {Projects?.data?.map(
-          (el: {
-            title: string;
-            description: string;
-            _id: string;
-            tasks: string[];
-          }) => {
-            return (
-              <div
-                className="bg-[#eee] p-3 rounded-xl w-96 max-sm:w-[16pc] flex mt-5 flex-col relative"
-                key={el._id}
-              >
-                {/* Project Title and Description */}
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <Link href={`projects/${el?._id}`}>
-                      <h1 className="text-black hover:text-[#2e2ebf] cursor-pointer font-semibold">
-                        {el.title} {/* Project Title */}
-                      </h1>
-                    </Link>
-                    <p className="text-sm text-gray-500">{el.description}</p>{" "}
-                    {/* Project Description */}
-                  </div>
-                </div>
-
-                {/* Progress section */}
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <AiFillDatabase size={12} color="#6a7282" />{" "}
-                      {/* Icon for progress */}
-                      <h1 className="text-gray-500 text-sm">Progress</h1>
+        {Array.isArray(Projects?.data) && Projects.data.length > 0 ? (
+          Projects.data.map(
+            (el: {
+              title: string;
+              description: string;
+              _id: string;
+              tasks: string[];
+            }) => {
+              return (
+                <div
+                  className="bg-[#eee] p-3 rounded-xl w-96 max-sm:w-[16pc] flex mt-5 flex-col relative"
+                  key={el._id}
+                >
+                  {/* Project Title and Description */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <Link href={`projects/${el?._id}`}>
+                        <h1 className="text-black hover:text-[#2e2ebf] cursor-pointer font-semibold">
+                          {el.title} {/* Project Title */}
+                        </h1>
+                      </Link>
+                      <p className="text-sm text-gray-500">{el.description}</p>{" "}
+                      {/* Project Description */}
                     </div>
-                    {/* Displaying progress as 0/total tasks */}
-                    <p className="text-gray-500 text-sm">
-                      0/{el.tasks?.length}
-                    </p>
                   </div>
-                  {/* Progress bar (currently static) */}
-                  <div className="h-1 rounded-full w-full bg-[#d1d1d1]"></div>
+
+                  {/* Progress section */}
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <AiFillDatabase size={12} color="#6a7282" />{" "}
+                        {/* Icon for progress */}
+                        <h1 className="text-gray-500 text-sm">Progress</h1>
+                      </div>
+                      {/* Displaying progress as 0/total tasks */}
+                      <p className="text-gray-500 text-sm">
+                        0/{el.tasks?.length}
+                      </p>
+                    </div>
+                    {/* Progress bar (currently static) */}
+                    <div className="h-1 rounded-full w-full bg-[#d1d1d1]"></div>
+                  </div>
                 </div>
-              </div>
-            );
-          }
+              );
+            }
+          )
+        ) : (
+          <p>No projects available</p> // Displaying a fallback message when no projects exist
         )}
       </div>
 

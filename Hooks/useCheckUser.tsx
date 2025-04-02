@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 type UserType = {
   user: {
     userName: string;
+    Photo: string;
   };
 };
 
