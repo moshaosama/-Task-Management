@@ -48,7 +48,6 @@ const getProjectSlice = createSlice({
       state.loading = false;
       state.message = action.payload;
       state.error = "";
-      console.log("Project Deleted Successfully!");
     });
     builder.addCase(fetchDeleteProducts.rejected, (state, action) => {
       state.loading = false;
