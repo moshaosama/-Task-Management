@@ -3,6 +3,10 @@
 import useNotify from "@/Hooks/useNotify";
 import { FetchcreateProject } from "@/Store/Reducer/ProjectSlice/createProjectSlice";
 import { fetchCreateTask } from "@/Store/Reducer/Tasks/createTaskSlice";
+import {
+  fetchGetAllTasks,
+  fetchGetTasks,
+} from "@/Store/Reducer/Tasks/getTasksSlice";
 import { AppDispatch } from "@/Store/Store";
 import { useParams } from "next/navigation";
 import { memo } from "react";
@@ -23,13 +27,20 @@ const AddNewTasks = memo(
     const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (data: any) => {
-      const user = JSON.parse(localStorage.getItem("user") || "null");
-      const accessToken = user?.access_token;
+      try {
+        const user = JSON.parse(localStorage.getItem("user") || "null");
+        const accessToken = user?.access_token;
 
-      if (!accessToken) {
-        notify("Please Login First");
+        if (!accessToken) {
+          notify("Please Login First");
+        }
+        dispatch(fetchCreateTask({ ...data, projectID: id }));
+        notify("Addedd Successfully!");
+        dispatch(fetchGetTasks(id as string));
+        setActive();
+      } catch (err) {
+        notify(err as string);
       }
-      dispatch(fetchCreateTask({ ...data, projectID: id }));
     };
     return (
       <>
