@@ -50,7 +50,6 @@ const createProjectSlice = createSlice({
       state.loading = false;
       state.data = action.payload;
       state.error = "";
-      console.log("Project Created Successfully!");
     });
     builder.addCase(FetchcreateProject.rejected, (state, action) => {
       state.loading = false;
