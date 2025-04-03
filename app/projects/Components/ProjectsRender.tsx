@@ -80,7 +80,7 @@ const ProjectsRender = () => {
               <div className="h-1 rounded-full w-full bg-[#d1d1d1]"></div>
             </div>
             <div className="bg-[#2e2ebf] p-2 w-32 text-center rounded-xl text-white mt-3">
-              <h1 className="text-sm font-bold">{el.categoryID.Title}</h1>
+              <h1 className="text-sm font-bold">{el?.categoryID?.Title}</h1>
             </div>
           </div>
         ))
