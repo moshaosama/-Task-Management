@@ -1,10 +1,12 @@
 "use client";
+import useNotify from "@/Hooks/useNotify";
 import { FetchLogin } from "@/Store/Reducer/Login/LoginSlice";
 import { AppDispatch } from "@/Store/Store";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const login = () => {
   const {
@@ -14,8 +16,16 @@ const login = () => {
   } = useForm();
   const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit = (data: any) => {
-    dispatch(FetchLogin(data));
+  const { notify } = useNotify();
+  const Navigator = useNavigate();
+
+  const onSubmit = async (data: any) => {
+    try {
+      dispatch(FetchLogin(data));
+      Navigator("/dashboard");
+    } catch (err) {
+      notify("Please Login");
+    }
   };
 
   return (
