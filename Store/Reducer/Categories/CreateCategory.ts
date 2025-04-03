@@ -14,7 +14,7 @@ export const FetchcreateCategory = createAsyncThunk(
       const accessToken = user?.access_token;
 
       if (!accessToken) {
-        return;
+        return rejectWithValue("Unauthorized request");
       }
 
       const response = await fetch("http://localhost:3000/categories", {
@@ -33,8 +33,11 @@ export const FetchcreateCategory = createAsyncThunk(
       }
 
       return result;
-    } catch (error: any) {
-      return rejectWithValue(error.message || "An error occurred");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unexpected error occurred");
     }
   }
 );
