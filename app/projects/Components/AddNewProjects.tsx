@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useNotify from "@/Hooks/useNotify";
+import { fetchGetAllProjects } from "@/Store/Reducer/ProjectSlice/getProjectSlice";
 
 // تعريف مخطط التحقق باستخدام Zod
 const projectSchema = z.object({
@@ -49,9 +50,10 @@ const AddNewProjects = memo(
 
         await dispatch(
           FetchcreateProject({ ...data, categoryID: selectedCategory })
-        ).unwrap();
+        );
 
-        toast.success("Project added successfully!");
+        notify("Added Successfully!");
+        dispatch(fetchGetAllProjects());
         setActive();
       } catch (error) {
         toast.error("Failed to add project. Please try again.");
