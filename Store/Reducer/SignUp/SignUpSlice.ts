@@ -38,7 +38,6 @@ const signUpSlice = createSlice({
       state.loading = false;
       state.data = action.payload;
       state.error = "";
-      window.location.reload();
     });
     builder.addCase(FetchSignUp.rejected, (state, action) => {
       state.loading = false;
